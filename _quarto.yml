@@ -17,7 +17,7 @@ website:
         href: https://github.com/nalany02/NalanyRichardson-portfolio
 format:
   html:
-    theme: lux
+    theme: united
     highlight: zenburn
     css: styles.css
     toc: FALSE

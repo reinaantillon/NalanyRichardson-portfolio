@@ -1,5 +1,119 @@
 ---
-title: "Future Exercise"
+title: "Starter Analysis Exercise"
 ---
 
-Placeholder file for a future exercise.
+Note: This document contains code needed for each part of the Starter Analysis exercise for the MADA Spring 2026 course. Each part is listed under its corresponding part name. As a disclaimer, AI was used for code brevity and assistance in fixing errors in code. `Cmd + option + I` was used to create chunks for code sections (mac option).
+
+## Part 1
+
+### Package loading and install
+
+```{r}
+# install dslabs package (run once in the console if not already installed)
+# install.packages("dslabs")
+
+# load required packages
+# tidyverse added for later steps with data processing
+library("dslabs")
+library("tidyverse")
+```
+
+## Show dataset structure
+
+```{r}
+# only run the next command interactively, not in a script
+# help(gapminder)
+
+# get an overview of data structure
+str(gapminder)
+```
+
+```{r}
+# get a summary of data
+summary(gapminder)
+```
+
+```{r}
+# determine the type of object gapminder is
+class(gapminder)
+```
+
+### Data processing
+
+### Process Africa subset
+
+```{r}
+# subset gapminder data to rows where continent is "Africa"
+africadata <- gapminder[gapminder$continent == "Africa", ]
+
+# inspect structure (should show 2907 observations; troubleshoot if not)
+str(africadata)
+
+# check summary statistics 
+summary(africadata)
+```
+
+```{r}
+# keep only infant_mortality and life_expectancy
+africa_infant_mortality <- africadata[, c("infant_mortality", "life_expectancy")]
+
+# keep only population and life_expectancy
+africa_population <- africadata[, c("population", "life_expectancy")]
+
+# inspect structure + summaries
+str(africa_infant_mortality)
+summary(africa_infant_mortality)
+
+str(africa_population)
+summary(africa_population)
+```
+
+### How to plot the data
+
+# 
+
+```{r}
+# life expectancy vs infant mortality (points)
+plot(
+  x = africa_infant_mortality$infant_mortality,
+  y = africa_infant_mortality$life_expectancy,
+  xlab = "Infant Mortality",
+  ylab = "Life Expectancy",
+  main = "Infant Mortality vs Life Expectancy (Africa)"
+)
+```
+
+```{r}
+# life expectancy vs population (points) with log-scaled x-axis
+plot(
+  x = africa_population$population,
+  y = africa_population$life_expectancy,
+  xlab = "Population (log scale)",
+  ylab = "Life Expectancy",
+  main = "Population vs Life Expectancy (Africa)",
+  log = "x"
+)
+```
+
+The `infant mortality plot` shows a negative correlation with life expectancy, while the population plot shows a general positive relationship. The plots appear to in a streaking form because individual countries are counted across multiple points. In the `population vs life expectancy (Africa) plot`, we can see that for individual country populations, as population increases, so does life expectancy.
+
+```{r}
+# count missing infant_mortality values for each year
+tapply(africadata$infant_mortality, africadata$year, function(x) sum(is.na(x)))
+# subset to year 2000
+africa_2000 <- africadata[africadata$year == 2000, ]
+str(africa_2000)
+summary(africa_2000)
+```
+
+```{r}
+fit1 <- lm(life_expectancy ~ infant_mortality, data = africa_2000)
+summary(fit1)
+
+fit2 <- lm(life_expectancy ~ population, data = africa_2000)
+summary(fit2)
+```
+
+`Fit1` shows that `infant mortality` shows a statistically significant negative relationship with `life expectancy` **(p = 2.83\^-08)**, explaining approximately **47% of the variation in life expectancy** among African countries in 2000. In contrast, `population size` shows no significant association with life expectancy (p = 0.616). The model fit is also highly significant with a prediction error rate of 6.221 years (F= 43.48, p= 2.825\^-08).
+
+`Fit2` indicates that there is no statistically significant relationship between `population size` and `life expectancy` (estimate =2.756\^-08; p=0.616). The model is not significant and does not explain the variation in life expectancy (R2= 0.005176; adjusted value of -0.01513; F= 0.2549, **p= 0.6159**). Predictor error is large for this dataset at 8.524 years.
