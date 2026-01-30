@@ -12,6 +12,8 @@ website:
         menu:
           - text: "Starter Analysis Exercise"
             file: starter-analysis-exercise/starter-analysis-exercise.qmd
+          - text: "READy exercise"
+            file: ready-exercise/ready-exercise.html
     right:
       - icon: github 
         href: https://github.com/nalany02/NalanyRichardson-portfolio
