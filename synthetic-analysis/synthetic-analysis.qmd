@@ -3,11 +3,6 @@ title: "Synthetic Data Exploratory Analysis"
 date: "2026-02-06"
 output: html_document
 ---
-
-```{r, include=FALSE, cache=FALSE}
-knitr::read_chunk('edacode.R')
-```
-
 Load the packages.
 
 ```{r,packages, echo=FALSE,message=FALSE}
@@ -122,21 +117,6 @@ summary(m3)
 # Compare fit
 anova(m1, m2, m3)
 AIC(m1, m2, m3)
-# Then we can make a combined report file for storing summmaries of our models.
-# Save model summaries to a text file
-# install.packages("here") # if not already installed
-library(here)
-capture.output(
-  "=== m1: Troponin ~ TreatmentGroup ===",
-  summary(m1),
-  "",
-  "=== m2: Troponin ~ TreatmentGroup + Age + Gender + BloodPressure ===",
-  summary(m2),
-  "",
-  "=== m3: Troponin ~ TreatmentGroup * BloodPressure + Age + Gender ===",
-  summary(m3),
-  file = here("results", "output", "lm_models_combined_summary.txt")
-)
 ```
 
 Across models, `Treatment Group` was the main predictor of `Troponin` levels, with `Age` and `Blood Pressure` also contributing in more complex models. `Group B` tended to trend higher, with 0.054 ng/mL higher troponin, and `Placebo` was 0.234 ng/mL higher comparatively. This means that those taking the placebo have a higher risk of heart attack or injury.
