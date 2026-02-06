@@ -12,10 +12,10 @@ website:
         menu:
           - text: "Starter Analysis Exercise"
             file: starter-analysis-exercise/starter-analysis-exercise.qmd
-          - text: "READy exercise"
+          - text: "READy Exercise"
             file: ready-exercise/ready-exercise.html
-          - text: "Synthetic Data Analysis"
-            file: synthetic-data-analysis/synthetic-analysis.qmd
+          - text: "Synthetic Data Exercise"
+            file: synthetic-analysis/synthetic-analysis.qmd
     right:
       - icon: github 
         href: https://github.com/nalany02/NalanyRichardson-portfolio
